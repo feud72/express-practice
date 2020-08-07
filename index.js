@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv/config");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -9,8 +10,10 @@ const PORT = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.json());
 
+const authRoute = require("./routes/auth");
 const postsRoute = require("./routes/posts");
-app.use("/posts/", postsRoute);
+app.use("/posts", postsRoute);
+app.use("/api/user", authRoute);
 
 app.get("/", (req, res) => {
   res.send("We are on Home");
